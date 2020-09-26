@@ -1,3 +1,7 @@
 <resources>
     <dimen name="fab_margin">16dp</dimen>
+    <dimen name="title_size">30sp</dimen>
+    <dimen name="margin_field">32dp</dimen>
+    <dimen name="margin_field_vertical">8dp</dimen>
+    <dimen name="margin_field_vertical_small">4dp</dimen>
 </resources>
