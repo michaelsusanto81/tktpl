@@ -1,6 +1,7 @@
 package id.ac.ui.cs.mobileprogramming.michaelsusanto.helloworld.util
 
 import id.ac.ui.cs.mobileprogramming.michaelsusanto.helloworld.data.model.UserRegisterRequest
+import id.ac.ui.cs.mobileprogramming.michaelsusanto.helloworld.data.model.ValidationResponse
 import java.util.regex.Matcher
 import java.util.regex.Pattern
 
@@ -13,28 +14,36 @@ object RegisterUtil {
 
     fun inputValidation(
         request: UserRegisterRequest
-    ): Boolean {
+    ): ValidationResponse {
         if(!validateNonEmpty(request)) {
-            return false
+            return ValidationResponse(true, "Please fill all fields.")
         }
 
         if(!validateUsername(request.username)) {
-            return false
+            return ValidationResponse(true, "Username contains at least 4 characters.")
+        }
+
+        if(!validateUsernameExist(request.username)) {
+            return ValidationResponse(true, "Username is already taken.")
         }
 
         if(!validateEmail(request.email)) {
-            return false
+            return ValidationResponse(true, "Email is not valid.")
         }
 
         if(!validatePassword(request.password)) {
-            return false
+            return ValidationResponse(true, "Password should contain at least 1 number and 8 characters.")
         }
 
         if(request.password != request.passwordConfirmation) {
-            return false
+            return ValidationResponse(true, "Password confirmation doesn't match.")
         }
 
-        return true
+        return ValidationResponse(false, "Successfully registered!")
+    }
+
+    private fun validateUsernameExist(username: String): Boolean {
+        return username !in EXISTING_USERNAMES
     }
 
     private fun validatePassword(password: String): Boolean {
@@ -48,8 +57,7 @@ object RegisterUtil {
     }
 
     private fun validateUsername(username: String): Boolean {
-        return username.length >= 4 &&
-                username !in EXISTING_USERNAMES
+        return username.length >= 4
     }
 
     private fun validateNonEmpty(request: UserRegisterRequest): Boolean {

@@ -12,7 +12,7 @@ class RegisterUtilTest {
     private lateinit var request: UserRegisterRequest
 
     @Test
-    fun `empty username returns false`() {
+    fun `empty username returns error`() {
         request = UserRegisterRequest(
             username = "",
             name = "Michael Susanto",
@@ -22,11 +22,11 @@ class RegisterUtilTest {
             passwordConfirmation = "password123"
         )
         val response = RegisterUtil.inputValidation(request)
-        assertFalse(response)
+        assertTrue(response.isError)
     }
 
     @Test
-    fun `existing username returns false`() {
+    fun `existing username returns error`() {
         request = UserRegisterRequest(
             username = "admin",
             name = "Michael Susanto",
@@ -36,11 +36,11 @@ class RegisterUtilTest {
             passwordConfirmation = "password123"
         )
         val response = RegisterUtil.inputValidation(request)
-        assertFalse(response)
+        assertTrue(response.isError)
     }
 
     @Test
-    fun `username length less than 4 returns false`() {
+    fun `username length less than 4 returns error`() {
         request = UserRegisterRequest(
             username = "mic",
             name = "Michael Susanto",
@@ -50,11 +50,11 @@ class RegisterUtilTest {
             passwordConfirmation = "password123"
         )
         val response = RegisterUtil.inputValidation(request)
-        assertFalse(response)
+        assertTrue(response.isError)
     }
 
     @Test
-    fun `username length greater than equals 4 returns true`() {
+    fun `username length greater than equals 4 doesn't return error`() {
         request = UserRegisterRequest(
             username = "michael",
             name = "Michael Susanto",
@@ -64,11 +64,11 @@ class RegisterUtilTest {
             passwordConfirmation = "password123"
         )
         val response = RegisterUtil.inputValidation(request)
-        assertTrue(response)
+        assertFalse(response.isError)
     }
 
     @Test
-    fun `empty name returns false`() {
+    fun `empty name returns error`() {
         request = UserRegisterRequest(
             username = "michael",
             name = "",
@@ -78,11 +78,11 @@ class RegisterUtilTest {
             passwordConfirmation = "password123"
         )
         val response = RegisterUtil.inputValidation(request)
-        assertFalse(response)
+        assertTrue(response.isError)
     }
 
     @Test
-    fun `non-empty name returns true`() {
+    fun `non-empty name doesn't return error`() {
         request = UserRegisterRequest(
             username = "michael",
             name = "Michael Susanto",
@@ -92,11 +92,11 @@ class RegisterUtilTest {
             passwordConfirmation = "password123"
         )
         val response = RegisterUtil.inputValidation(request)
-        assertTrue(response)
+        assertFalse(response.isError)
     }
 
     @Test
-    fun `empty email returns false`() {
+    fun `empty email returns error`() {
         request = UserRegisterRequest(
             username = "michael",
             name = "Michael Susanto",
@@ -106,11 +106,11 @@ class RegisterUtilTest {
             passwordConfirmation = "password123"
         )
         val response = RegisterUtil.inputValidation(request)
-        assertFalse(response)
+        assertTrue(response.isError)
     }
 
     @Test
-    fun `non-empty email but not an email's pattern returns false`() {
+    fun `non-empty email but not an email's pattern returns error`() {
         request = UserRegisterRequest(
             username = "michael",
             name = "Michael Susanto",
@@ -120,7 +120,7 @@ class RegisterUtilTest {
             passwordConfirmation = "password123"
         )
         val response = RegisterUtil.inputValidation(request)
-        assertFalse(response)
+        assertTrue(response.isError)
 
         request = UserRegisterRequest(
             username = "michael",
@@ -131,11 +131,11 @@ class RegisterUtilTest {
             passwordConfirmation = "password123"
         )
         val responseDuplicatedEmail = RegisterUtil.inputValidation(request)
-        assertFalse(responseDuplicatedEmail)
+        assertTrue(responseDuplicatedEmail.isError)
     }
 
     @Test
-    fun `non-empty email and is a valid email returns true`() {
+    fun `non-empty email and is a valid email doesn't return error`() {
         request = UserRegisterRequest(
             username = "michael",
             name = "Michael Susanto",
@@ -145,11 +145,11 @@ class RegisterUtilTest {
             passwordConfirmation = "password123"
         )
         val response = RegisterUtil.inputValidation(request)
-        assertTrue(response)
+        assertFalse(response.isError)
     }
 
     @Test
-    fun `empty address returns false`() {
+    fun `empty address returns error`() {
         request = UserRegisterRequest(
             username = "michael",
             name = "Michael Susanto",
@@ -159,11 +159,11 @@ class RegisterUtilTest {
             passwordConfirmation = "password123"
         )
         val response = RegisterUtil.inputValidation(request)
-        assertFalse(response)
+        assertTrue(response.isError)
     }
 
     @Test
-    fun `non-empty address returns true`() {
+    fun `non-empty address doesn't return error`() {
         request = UserRegisterRequest(
             username = "michael",
             name = "Michael Susanto",
@@ -173,11 +173,11 @@ class RegisterUtilTest {
             passwordConfirmation = "password123"
         )
         val response = RegisterUtil.inputValidation(request)
-        assertTrue(response)
+        assertFalse(response.isError)
     }
 
     @Test
-    fun `empty password returns false`() {
+    fun `empty password returns error`() {
         request = UserRegisterRequest(
             username = "michael",
             name = "Michael Susanto",
@@ -187,11 +187,11 @@ class RegisterUtilTest {
             passwordConfirmation = "password123"
         )
         val response = RegisterUtil.inputValidation(request)
-        assertFalse(response)
+        assertTrue(response.isError)
     }
 
     @Test
-    fun `non-empty password but less than 8 characters returns false`() {
+    fun `non-empty password but less than 8 characters returns error`() {
         request = UserRegisterRequest(
             username = "michael",
             name = "Michael Susanto",
@@ -201,11 +201,11 @@ class RegisterUtilTest {
             passwordConfirmation = "pass"
         )
         val response = RegisterUtil.inputValidation(request)
-        assertFalse(response)
+        assertTrue(response.isError)
     }
 
     @Test
-    fun `non-empty password with greater than equal 8 characters but doesn't contain number returns false`() {
+    fun `non-empty password with greater than equal 8 characters but doesn't contain number returns error`() {
         request = UserRegisterRequest(
             username = "michael",
             name = "Michael Susanto",
@@ -215,11 +215,11 @@ class RegisterUtilTest {
             passwordConfirmation = "passwordhaha"
         )
         val response = RegisterUtil.inputValidation(request)
-        assertFalse(response)
+        assertTrue(response.isError)
     }
 
     @Test
-    fun `non-empty password with greater than equal 8 characters and contains number returns true`() {
+    fun `non-empty password with greater than equal 8 characters and contains number doesn't return error`() {
         request = UserRegisterRequest(
             username = "michael",
             name = "Michael Susanto",
@@ -229,11 +229,11 @@ class RegisterUtilTest {
             passwordConfirmation = "password123"
         )
         val response = RegisterUtil.inputValidation(request)
-        assertTrue(response)
+        assertFalse(response.isError)
     }
 
     @Test
-    fun `password confirmation doesn't match password returns false`() {
+    fun `password confirmation doesn't match password returns error`() {
         request = UserRegisterRequest(
             username = "michael",
             name = "Michael Susanto",
@@ -243,11 +243,11 @@ class RegisterUtilTest {
             passwordConfirmation = "password1234"
         )
         val response = RegisterUtil.inputValidation(request)
-        assertFalse(response)
+        assertTrue(response.isError)
     }
 
     @Test
-    fun `password confirmation matches password returns true`() {
+    fun `password confirmation matches password doesn't return error`() {
         request = UserRegisterRequest(
             username = "michael",
             name = "Michael Susanto",
@@ -257,6 +257,6 @@ class RegisterUtilTest {
             passwordConfirmation = "password123"
         )
         val response = RegisterUtil.inputValidation(request)
-        assertTrue(response)
+        assertFalse(response.isError)
     }
 }

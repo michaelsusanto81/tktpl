@@ -2,6 +2,7 @@ package id.ac.ui.cs.mobileprogramming.michaelsusanto.helloworld.util
 
 import id.ac.ui.cs.mobileprogramming.michaelsusanto.helloworld.data.model.User
 import id.ac.ui.cs.mobileprogramming.michaelsusanto.helloworld.data.model.UserLoginRequest
+import id.ac.ui.cs.mobileprogramming.michaelsusanto.helloworld.data.model.ValidationResponse
 
 object LoginUtil {
 
@@ -17,20 +18,20 @@ object LoginUtil {
 
     fun inputValidation(
         request: UserLoginRequest
-    ): Boolean {
+    ): ValidationResponse {
         if(!validateNonEmpty(request)) {
-            return false
+            return ValidationResponse(true, "Please fill all fields.")
         }
 
         if(!validateUsername(request.username)) {
-            return false
+            return ValidationResponse(true, "Username doesn't exist.")
         }
 
         if(!validatePassword(request.password)) {
-            return false
+            return ValidationResponse(true, "Password doesn't match.")
         }
 
-        return true
+        return ValidationResponse(false, "Logged in!")
     }
 
     private fun validatePassword(password: String): Boolean {

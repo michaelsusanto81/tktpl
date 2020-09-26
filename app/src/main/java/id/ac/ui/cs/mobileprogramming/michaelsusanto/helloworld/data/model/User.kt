@@ -21,3 +21,8 @@ data class User (
     val email: String,
     val address: String
 )
+
+data class ValidationResponse (
+    val isError: Boolean,
+    val message: String
+)
