@@ -12,9 +12,6 @@ import androidx.navigation.fragment.findNavController
 import id.ac.ui.cs.mobileprogramming.michaelsusanto.helloworld.R
 import id.ac.ui.cs.mobileprogramming.michaelsusanto.helloworld.databinding.FragmentLoginBinding
 
-/**
- * A simple [Fragment] subclass as the default destination in the navigation.
- */
 class LoginFragment : Fragment() {
 
     private lateinit var binding: FragmentLoginBinding

@@ -69,6 +69,7 @@ class RegisterFragmentTest {
         onView(withId(R.id.register_button)).perform(click())
         onView(ViewMatchers.withText("Successfully registered!")).inRoot(ToastMatcher())
             .check(matches(isDisplayed()))
+        onView(withId(R.id.fragment_login)).check(matches(isDisplayed()))
     }
 
     @Test

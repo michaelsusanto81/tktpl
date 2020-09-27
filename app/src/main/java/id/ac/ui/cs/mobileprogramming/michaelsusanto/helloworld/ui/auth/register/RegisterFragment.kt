@@ -13,9 +13,6 @@ import androidx.navigation.fragment.findNavController
 import id.ac.ui.cs.mobileprogramming.michaelsusanto.helloworld.R
 import id.ac.ui.cs.mobileprogramming.michaelsusanto.helloworld.databinding.FragmentRegisterBinding
 
-/**
- * A simple [Fragment] subclass as the second destination in the navigation.
- */
 class RegisterFragment : Fragment() {
 
     private lateinit var binding: FragmentRegisterBinding
@@ -41,8 +38,6 @@ class RegisterFragment : Fragment() {
             val address = binding.addressEdit.text.toString()
             val password = binding.passwordEdit.text.toString()
             val passwordConfirmation = binding.passwordconfirmEdit.text.toString()
-
-            Log.d("PASSWORD & CONFIRM: ", "$password $passwordConfirmation")
 
             val response = viewModel.register(username, name, email, address, password, passwordConfirmation)
             Toast.makeText(context, response.message, Toast.LENGTH_LONG).show()
