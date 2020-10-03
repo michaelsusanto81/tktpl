@@ -1,13 +1,11 @@
 package id.ac.ui.cs.mobileprogramming.michaelsusanto.helloworld
 
 import android.annotation.SuppressLint
-import android.content.BroadcastReceiver
-import android.content.Context
-import android.content.Intent
-import android.content.IntentFilter
+import android.content.*
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import id.ac.ui.cs.mobileprogramming.michaelsusanto.helloworld.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
@@ -47,6 +45,16 @@ class MainActivity : AppCompatActivity() {
     override fun onDestroy() {
         super.onDestroy()
         stopService(Intent(this, StopwatchService::class.java))
+    }
+
+    override fun onBackPressed() {
+        val dialog = MaterialAlertDialogBuilder(this)
+            .setTitle("Exit")
+            .setMessage("Are you sure? Currently running stopwatch will be lost.")
+            .setPositiveButton("Yes") { _, _ -> finish() }
+            .setNegativeButton("No") { _, _ -> }
+            .create()
+        dialog.show()
     }
 
     @SuppressLint("SetTextI18n")

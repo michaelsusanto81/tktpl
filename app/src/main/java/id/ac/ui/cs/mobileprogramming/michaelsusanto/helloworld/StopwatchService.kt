@@ -8,7 +8,7 @@ import android.os.IBinder
 class StopwatchService: Service() {
 
     companion object {
-        const val STOPWATCH_BR: String = "com.stopwatch.stopwatch"
+        const val STOPWATCH_BR: String = "id.ac.ui.cs.mobileprogramming.michaelsusanto.helloworld"
     }
 
     private val REFRESH_RATE: Long = 100;
