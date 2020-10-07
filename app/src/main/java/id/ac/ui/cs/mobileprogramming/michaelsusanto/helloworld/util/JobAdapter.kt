@@ -9,7 +9,7 @@ import id.ac.ui.cs.mobileprogramming.michaelsusanto.helloworld.R
 import id.ac.ui.cs.mobileprogramming.michaelsusanto.helloworld.data.JobModel
 import kotlinx.android.synthetic.main.card_job.view.*
 
-class JobAdapter(private val jobs: ArrayList<JobModel>) : RecyclerView.Adapter<JobAdapter.Holder>() {
+class JobAdapter(private val jobs: ArrayList<JobModel>, private val listener: OnJobClickListener) : RecyclerView.Adapter<JobAdapter.Holder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): JobAdapter.Holder {
         return Holder(
             LayoutInflater.from(parent.context).inflate(R.layout.card_job, parent, false)
@@ -28,7 +28,7 @@ class JobAdapter(private val jobs: ArrayList<JobModel>) : RecyclerView.Adapter<J
             view.setOnClickListener {
                 val position = adapterPosition
                 val job = jobs[position]
-                Log.i("JOB CLICKED: ", "${job.name} ${job.employer}")
+                listener.getClickedJob(job)
             }
         }
     }

@@ -14,11 +14,12 @@ import id.ac.ui.cs.mobileprogramming.michaelsusanto.helloworld.R
 import id.ac.ui.cs.mobileprogramming.michaelsusanto.helloworld.data.JobModel
 import id.ac.ui.cs.mobileprogramming.michaelsusanto.helloworld.databinding.FragmentFirstBinding
 import id.ac.ui.cs.mobileprogramming.michaelsusanto.helloworld.util.JobAdapter
+import id.ac.ui.cs.mobileprogramming.michaelsusanto.helloworld.util.OnJobClickListener
 
 /**
  * A simple [Fragment] subclass as the default destination in the navigation.
  */
-class FirstFragment : Fragment() {
+class FirstFragment : Fragment(), OnJobClickListener {
 
     private lateinit var binding: FragmentFirstBinding
     private lateinit var viewModel: JobViewModel
@@ -29,7 +30,7 @@ class FirstFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_first, container, false)
-        viewModel = ViewModelProvider(this).get(JobViewModel::class.java)
+        viewModel = ViewModelProvider(requireActivity()).get(JobViewModel::class.java)
 
         initRecView()
         return binding.root
@@ -42,13 +43,18 @@ class FirstFragment : Fragment() {
 
     private fun initRecView() {
         binding.mRecyclerView.layoutManager = LinearLayoutManager(context)
-        binding.mRecyclerView.adapter = JobAdapter(ArrayList())
+        binding.mRecyclerView.adapter = JobAdapter(ArrayList(), this)
         viewModel.fetchDataFromAPI()
     }
 
     private fun updateRecView() {
         viewModel.jobsLiveData.observe(viewLifecycleOwner, Observer {
-            binding.mRecyclerView.adapter = JobAdapter(viewModel.jobsLiveData.value as ArrayList<JobModel>)
+            binding.mRecyclerView.adapter = JobAdapter(viewModel.jobsLiveData.value as ArrayList<JobModel>, this)
         })
+    }
+
+    override fun getClickedJob(job: JobModel) {
+        viewModel.clickedJob.value = job
+        findNavController().navigate(R.id.action_FirstFragment_to_SecondFragment)
     }
 }
