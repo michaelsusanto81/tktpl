@@ -1,14 +1,6 @@
 package id.ac.ui.cs.mobileprogramming.michaelsusanto.helloworld.ui
 
-import android.content.BroadcastReceiver
-import android.content.Context
-import android.content.Intent
-import android.content.IntentFilter
-import android.net.wifi.WifiManager
-import android.os.Build
 import android.os.Bundle
-import android.util.Log
-import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.PermissionChecker
 import androidx.databinding.DataBindingUtil
@@ -42,6 +34,7 @@ class MainActivity : AppCompatActivity(), SwipeRefreshLayout.OnRefreshListener {
         binding.recView.adapter = WifiAdapter(ArrayList())
 
         binding.fab.setOnClickListener {
+            viewModel.postWifiList()
         }
     }
 
