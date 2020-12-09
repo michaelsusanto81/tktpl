@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">Hello World</string>
+    <string name="counter_title">You have pushed the button this many times:</string>
+    <string name="counter">0</string>
 </resources>

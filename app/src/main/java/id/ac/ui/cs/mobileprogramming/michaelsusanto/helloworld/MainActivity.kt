@@ -12,15 +12,26 @@ import id.ac.ui.cs.mobileprogramming.michaelsusanto.helloworld.databinding.Activ
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
+    private var counter: Int = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
         setSupportActionBar(findViewById(R.id.toolbar))
 
-        binding.fab.setOnClickListener { view ->
-            Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                    .setAction("Action", null).show()
+        if(savedInstanceState != null) {
+            counter = savedInstanceState.getInt("counter")
+            binding.counter.text = counter.toString()
         }
+
+        binding.fab.setOnClickListener {
+            counter += 1
+            binding.counter.text = counter.toString()
+        }
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        outState.putInt("counter", counter)
+        super.onSaveInstanceState(outState)
     }
 }
